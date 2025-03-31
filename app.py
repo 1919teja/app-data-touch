@@ -4,34 +4,26 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained model
-model = tf.keras.models.load_model("touch_classifier.h5")
+# Load the updated model
+model = tf.keras.models.load_model("touch_classifier.keras")
 
-# Age categories
-labels = ["Child", "Teen", "Adult"]
-
-@app.route('/')
+@app.route("/", methods=["GET"])
 def home():
-    return "API is working!"
+    return "Touch Classifier API is running!"
 
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        data = request.json
-        touch_area = float(data["touch_area"])
-        pressure = float(data["pressure"])
-
-        # Format input for the model
-        input_data = np.array([[touch_area, pressure]])
-        prediction = model.predict(input_data)
-
-        # Get the highest probability class
-        age_category = labels[np.argmax(prediction)]
+        data = request.get_json()  # Expecting a JSON request
+        input_data = np.array(data["features"]).reshape(1, -1)  # Reshape for model
         
-        return jsonify({"age_category": age_category})
+        prediction = model.predict(input_data)
+        response = {"prediction": prediction.tolist()}
+        
+        return jsonify(response)
+    
     except Exception as e:
         return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
-
+    app.run(host="0.0.0.0", port=5000, debug=True)

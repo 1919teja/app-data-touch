@@ -1,0 +1,38 @@
+# Ignore Python virtual environment
+venv/
+.env
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore dataset and serialized data
+*.csv
+*.pkl
+*.numbers
+
+# Ignore model files (keep only .keras)
+touch_classifier.h5
+
+# Ignore logs and temp files
+*.log
+*.out
+*.tmp
+*.swp
+.DS_Store
+
+# Ignore Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints/
+
+# Ignore IDE/project-specific files
+.vscode/
+.idea/
+*.iml
+
+# Ignore cloud deployment artifacts (if applicable)
+*.bak
+*.tar.gz
+*.zip
+
