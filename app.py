@@ -3,6 +3,11 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+
+
 app = Flask(__name__)
 
 # Load the trained model
@@ -13,7 +18,7 @@ EXPECTED_FEATURES = ["Touch Area (mm²)", "Pressure (force)"]
 
 CLASS_LABELS = ["Child", "Teen", "Adult"]
 
-import numpy as np
+
 
 # Define class labels (adjust if needed)
 CLASS_LABELS = ["Child", "Teen", "Adult"]
